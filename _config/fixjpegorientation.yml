@@ -10,3 +10,10 @@ After:
 Image:
   extensions:
     - 'FixJPEGOrientationImageExtension'
+
+# Uncomment below to set the quality for jpeg images to be the same as
+# what the silverstripe default is, or change it to a quality you wish
+# A default quality of 85 seems to be a happy medium for most digital
+# photos
+# FixJPEGOrientationImageExtension:
+#   default_quality: 75

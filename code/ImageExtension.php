@@ -5,6 +5,8 @@
  */
 class FixJPEGOrientationImageExtension extends DataExtension {
 
+    private static $default_quality = 100;
+
 	public function onAfterUpload() {
 
         //Get the full path to the image file
@@ -31,21 +33,23 @@ class FixJPEGOrientationImageExtension extends DataExtension {
         $source = @imagecreatefromjpeg($imagePath);
         if(!$source) return;
 
+        $defaultQuality = Config::inst()->get(__CLASS__, 'default_quality');
+
         //Modify according to Orientation
         //Replace JPEG at source, thus no other complexities regarding renaming, etc.
         //Note: Replacing an image this way strips any Exif data from the image
         switch ($orientation) {
             case 3 :
                 $modifiedImage = imagerotate($source, 180, 0);
-                imagejpeg($modifiedImage, $imagePath, 100);  //save output to file system at full quality
+                imagejpeg($modifiedImage, $imagePath, $defaultQuality);  //save output to file system at full quality
                 break;
             case 6 :
                 $modifiedImage = imagerotate($source, -90, 0);
-                imagejpeg($modifiedImage, $imagePath, 100);  //save output to file system at full quality
+                imagejpeg($modifiedImage, $imagePath, $defaultQuality);  //save output to file system at full quality
                 break;
             case 8 :
                 $modifiedImage = imagerotate($source, 90, 0);
-                imagejpeg($modifiedImage, $imagePath, 100);  //save output to file system at full quality
+                imagejpeg($modifiedImage, $imagePath, $defaultQuality);  //save output to file system at full quality
                 break;
         }
 
